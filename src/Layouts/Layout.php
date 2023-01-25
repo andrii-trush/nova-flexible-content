@@ -83,6 +83,20 @@ class Layout implements LayoutInterface, JsonSerializable, ArrayAccess, Arrayabl
      * @var Illuminate\Database\Eloquent\Model
      */
     protected $model;
+
+    /**
+     * The relation resolver callbacks for the Layout.
+     *
+     * @var array
+     */
+    protected  $relationResolvers = [];
+
+    /**
+     * The loaded relationships for the Layout.
+     *
+     * @var array
+     */
+    protected $relations = [];
     
     /**
      * Define that Layout is a model, when in fact it is not.
@@ -505,6 +519,7 @@ class Layout implements LayoutInterface, JsonSerializable, ArrayAccess, Arrayabl
      * @param  mixed  $offset
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->attributes[$offset]);
@@ -586,6 +601,20 @@ class Layout implements LayoutInterface, JsonSerializable, ArrayAccess, Arrayabl
     protected function relationLoaded()
     {
         return false;
+    }
+
+    /**
+     * Get the dynamic relation resolver if defined or inherited, or return null.
+     * Since it is not possible to define a relation on a layout, this method
+     * returns null
+     *
+     * @param  string  $class
+     * @param  string  $key
+     * @return mixed
+     */
+    public function relationResolver($class, $key)
+    {
+        return null;
     }
 
     /**
